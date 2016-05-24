@@ -17,11 +17,6 @@
  */
 package com.atlauncher.data;
 
-import com.atlauncher.App;
-import com.atlauncher.LogManager;
-import com.atlauncher.utils.Utils;
-import com.atlauncher.workers.InstanceInstaller;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,6 +29,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
+
+import com.atlauncher.App;
+import com.atlauncher.LogManager;
+import com.atlauncher.utils.Utils;
+import com.atlauncher.workers.InstanceInstaller;
 
 public class Downloadable {
     private String beforeURL;
@@ -298,12 +298,14 @@ public class Downloadable {
             if (this.oldFile != null && this.oldFile.exists()) {
                 Utils.moveFile(this.oldFile, this.file, true);
             }
+            downloadFile(downloadAsLibrary);
         } catch (IOException e) {
             LogManager.error("Failed to download " + this.url + " due to IOException!");
             App.settings.logStackTrace(e);
             if (this.oldFile != null && this.oldFile.exists()) {
                 Utils.moveFile(this.oldFile, this.file, true);
             }
+            downloadFile(downloadAsLibrary);
         } finally {
             try {
                 if (writer != null) {
